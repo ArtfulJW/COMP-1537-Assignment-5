@@ -40,6 +40,73 @@ app.get("/", function (req, res) {
 
 });
 
+// Server Detects ajaxPOST request, then handles it
+app.post("/login", function(req, res) {
+    res.setHeader("Content-Type", "application/json");
+
+
+    console.log("What was sent", req.body.email, req.body.password);
+
+
+    let results = authenticate(req.body.email, req.body.password,
+        function(userRecord) {
+            //console.log(rows);
+            if(userRecord == null) {
+                // server couldn't find that, so use AJAX response and inform
+                // the user. when we get success, we will do a complete page
+                // change. Ask why we would do this in lecture/lab :)
+                res.send({ status: "fail", msg: "User account not found." });
+            } else {
+                // authenticate the user, create a session
+                req.session.loggedIn = true;
+                req.session.email = userRecord.email;
+                req.session.name = userRecord.name;
+                req.session.save(function(err) {
+                    // session saved, for analytics, we could record this in a DB
+                });
+                // all we are doing as a server is telling the client that they
+                // are logged in, it is up to them to switch to the profile page
+                res.send({ status: "success", msg: "Logged in." });
+            }
+    });
+
+});
+
+// Login Authenticate Function
+function authenticate(email, pwd, callback) {
+
+    const mysql = require("mysql2");
+    const connection = mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "",
+      database: "pokemart"
+    });
+    connection.connect();
+    connection.query(
+      //'SELECT * FROM user',
+      "SELECT * FROM user WHERE email = ? AND password = ?", [email, pwd],
+      function(error, results, fields) {
+          // results is an array of records, in JSON format
+          // fields contains extra meta data about results
+          console.log("Results from DB", results, "and the # of records returned", results.length);
+
+          if (error) {
+              console.log(error);
+          }
+          if(results.length > 0) {
+              // Found Email and Password
+              return callback(results[0]);
+          } else {
+              // No user found
+              return callback(null);
+          }
+
+      }
+    );
+
+}
+
 async function init(){
 
     // we'll go over promises in COMP 2537, for now know that it allows us

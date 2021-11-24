@@ -52,4 +52,28 @@ ready(function(){
         xhr.send(params);
     }
 
+    // POST TO THE SERVER
+    document.querySelector("#LOGIN").addEventListener("click", function(e) {
+        e.preventDefault();
+        let email = document.getElementById("email");
+        let password = document.getElementById("password");
+        let queryString = "email=" + email.value + "&password=" + password.value;
+        //console.log("data that we will send", email.value, password.value);
+
+        ajaxPOST("/login", function(data) {
+
+            if(data) {
+                let dataParsed = JSON.parse(data);
+                console.log(dataParsed);
+                if(dataParsed.status == "fail") {
+                    document.getElementById("errorMsg").innerHTML = dataParsed.msg;
+                } else {
+                    window.location.replace("/profile");
+                }
+            }
+            //document.getElementById("errorMsg").innerHTML = dataParsed.msg;
+
+        }, queryString);
+    });
+
 })
