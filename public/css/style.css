@@ -1,0 +1,832 @@
+body{
+    background-color: #dfdfdf;
+    margin: 0;
+}
+
+/* Universal Selector */
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* a Tag Selector */
+a, a:visited, a:active{
+    text-decoration: none;
+    color: black;
+}
+
+a:hover{
+    color: rgb(255, 255, 255);
+}
+
+#navBar-link-Marketplace:hover{
+    color: rgb(255, 0, 0);
+}
+
+.figcaption{
+    text-align: center;
+    font-size: 2vw;
+    margin-bottom: 2vw;
+}
+
+.image-styling{
+    opacity: 1;
+    border-style: solid;
+    border-color:#7a7a7a;
+    border-radius: 25px;
+    border-width: 2px;
+    animation-duration: .15s;
+    background-color: #c1c1c1;
+}
+
+.image-styling:hover{
+    animation-name: image-shadow-lighten;
+    box-shadow: 5px 5px 5px rgb(179, 179, 179);
+    filter: brightness(110%);
+}
+
+@keyframes image-shadow-lighten{
+    from{
+        box-shadow: 0px 0px 0px rgb(255, 255, 255);
+        filter:brightness(100%);
+        
+    }
+    to{
+        box-shadow: 5px 5px 7px rgb(179, 179, 179);
+        filter: brightness(110%);
+    }
+}
+
+/* ================================================= Base Container for everything =================================================*/
+.Base-Container{
+    /*
+    Row 1 for NavBar (grid-container-navBar) Container
+    Row 2 for Title (grid-container-title) Container
+    Row 3 for Image (grid-container-titleButtons) Container
+    Row 4 for Content (grid-container-content) Container
+    Row 5 for Foot (grid-container-footer) Container
+    */
+
+    display: grid;
+    overflow: auto;
+    grid-template-columns: 100%;
+    grid-template-rows: repeat(5, auto);
+    
+    /*Visual Debugging 
+    background-color: cornflowerblue;*/
+}
+
+/* Liquid Container: [NavBar] =================================================*/
+.grid-container-navBar{
+    display: grid;
+    grid-template-columns: 2.5fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1;
+    grid-row: 1 / span 1;
+    margin-top: 6vh;
+    margin-bottom: 2vh;
+
+
+    background-color: #d2d2d2;
+}
+
+/* Liquid Container title */
+.grid-container-navbar-title{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 1fr;
+    grid-column: 1 / span 1;
+    place-self: center;
+    
+
+    /* Visual Debugging 
+    background-color: forestgreen; */
+}
+
+.grid-item-navbar-title-h1{
+    place-self: center;
+}
+
+/* Responsive Item: [img] */
+.grid-item-navbar-title-img{
+    grid-column: 1 / span 1;
+    place-self: center;
+
+    margin: -30px;
+    
+    width: 10vw;
+    height: auto;
+
+    /* Visual Debugging 
+    background-color: darkviolet;*/
+}
+
+/* Responsive Item: [Title] */
+.grid-item-navbar-title-h1{
+    grid-column: 2 / span 1;
+    grid-row: 1 / span 1;
+
+    font-size: 2vw;
+    padding: 5px;
+
+    /* Visual Debugging
+    background-color: aqua;*/
+}
+
+.grid-container-navBar-links{
+    display: contents;
+}
+
+.grid-container-navBar-links-Home{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    grid-column: 2 / span 1;
+    grid-row: 1 /span 1;
+    place-self: center;
+
+}
+
+.grid-container-navBar-links-Blog{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    grid-column: 3 / span 1;
+    grid-row: 1 /span 1;
+    place-self: center;
+}
+
+.grid-container-navBar-links-Marketplace{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    grid-column: 4 / span 1;
+    grid-row: 1 /span 1;
+    place-self: center;
+}
+
+.grid-container-navBar-links-Contact{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    grid-column: 5 / span 1;
+    grid-row: 1 /span 1;
+    place-self: center;
+}
+
+.grid-item-navBar-links-a{
+    font-size: 2vw;
+    padding: 20px;
+    place-self: center;
+}
+
+#navBar-link-Marketplace{
+    color:rgb(214, 61, 61);
+}
+
+/* Liquid Container: [Title] =================================================*/
+.grid-container-title{
+    display: grid;
+    grid-template-columns: 1;
+    grid-template-rows: 1;
+    grid-row: 2 / span 1;
+
+    /*Visual Debugging
+    background-color: brown;*/
+}
+
+/* Responsive Item: [Title] */
+.grid-item-title{
+    place-self: center;
+    text-align: center;
+    font-size: 1.5vw;
+    
+    /* Visual Debugging 
+    background-color: darkmagenta;*/
+}
+
+/* Liquid Container: [titleButtons] =================================================*/
+.grid-container-titleButtons{
+    display: grid;
+    justify-self: center;
+    justify-items: center;
+    grid-template-columns: 1;
+    grid-template-rows: 1;
+    grid-row: 3 / span 1;
+
+    /* Visual Debugging 
+    background-color: green; */
+}
+
+.grid-container-section-titleButtons{
+    display: grid;
+    place-items: center;
+    grid-template-columns: repeat(4, auto);
+    grid-template-rows: 1;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-column: 1 / span 4;
+    margin: 10px;
+
+    column-gap: 2.5vw;
+
+    /* Visual Debugging 
+    background-color: darksalmon;*/
+}
+
+/* Responsive Item: [titleButtons] */
+.grid-item-section-titleButtons{
+    padding: 10px;
+    margin: 10px;
+
+    width: 10vw;
+    height: auto;
+
+    /* Visual Debugging 
+    background-color: hotpink;*/
+}
+
+/* ================================================= Liquid Container: [content] =================================================*/
+.grid-container-content{
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    grid-template-rows: 1;
+    grid-row: 4 / span 1;
+
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    background-color: #d2d2d2;
+}
+
+/* Grid Container: [article] =================================================*/
+.grid-container-content-article{
+    display: grid;
+    place-items: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-row: 1 / span 2;
+
+    column-gap: .5vw;
+
+    /* Visual Debugging 
+    background-color: blue;*/
+}
+
+/* Grid Item: [articleImages] */
+.grid-item-content-articleImages{
+    padding: 15px;
+    margin: 5px;
+
+    width: 20vw;
+    height: auto;
+
+    /* Visual Debugging 
+    background-color: darkgoldenrod;*/
+}
+
+
+
+/* Grid Container: [aside] ================================================= */
+.grid-container-content-aside{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 1fr);
+    grid-row: 1 / span 3;
+
+    place-items: center;
+
+    /* Visual Debugging 
+    background-color: aquamarine;*/
+}
+
+/* Grid Container [Image+Description Cards] ============================== */
+.grid-container-content-aside-image-description-cards{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 1fr;
+
+    padding: 10px;
+    
+    /* Visual Debugging 
+    background-color: blueviolet;*/
+}
+
+/* Grid Item: [image] */
+.grid-item-content-aside-image{
+
+    grid-column: 1 / span 1;
+    justify-self: start;
+    align-self: center;
+    padding: 10px;
+    margin: 5px;
+
+    width: 10vw;
+    height: auto;
+    
+    /* Visual Debugging 
+    background-color:crimson;*/
+
+}
+
+/* Grid Item: [description] */
+.grid-item-content-aside-description{
+
+    grid-column: 2 / span 1;
+    justify-self: center;
+    align-self: start;
+    padding: 3px;
+    margin: 3px;
+    font-size: 1.35vw;
+
+    /* Visual Debugging 
+    background-color: darkolivegreen;*/
+}
+
+/* Liquid Container: [footer] ================================================= */
+.grid-container-footer-div{
+    display: grid;
+    grid-row: 5 / span 1;
+
+    grid-template-columns: 2;
+    grid-template-rows: 1fr;
+    place-self: center;
+
+    /* Visual Debugging 
+    background-color: darkorange;*/
+
+}
+
+/* Grid Item: [img] */
+.grid-item-footer-div-img{
+    padding: 5px;
+    margin: 10px;
+    justify-self: end;
+    align-self: center;
+
+    grid-column: 1 / span 1;
+
+    width: 8vw;
+    height: auto;
+
+}
+
+/* Grid Item: [p] */
+.grid-item-footer-div-information{
+    padding: 10px;
+    margin: 10px;
+    place-self: center;
+    font-size: 1.5vw;
+
+    grid-column: 2 / span 1;
+    
+    /* Visual Debugging
+    background-color: darkviolet;*/
+    
+}
+
+/* ================================================= Media Queries ================================================= */
+@media only screen and (min-width:1401px){
+    /* Visual Debugging 
+    body{
+        background-color: aquamarine;
+    } */
+
+}
+
+@media only screen  and (max-width: 1400px){
+    /* Visual Debugging 
+    body{
+        background-color: rgb(168, 255, 127);
+    } */
+}
+
+@media only screen and (max-width: 1280px){
+    /* Visual Debugging 
+    body{
+        background-color: rgb(255, 253, 127);
+    } */
+
+    /* Liquid Container: [NavBar] =================================================*/
+    .grid-container-navBar{
+        display: grid;
+        grid-template-columns: .5fr .5fr .65fr .5fr .5fr;
+        grid-template-rows: 1fr;
+
+        background-color: #d2d2d2;
+    }
+
+    /* Liquid Container title */
+    .grid-container-navbar-title{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        
+        grid-column: 3 / span 1;
+
+        /* Visual Debugging 
+        background-color: forestgreen; */
+    }
+
+    .grid-item-navbar-title-h1{
+        place-self: center;
+    }
+
+    /* Responsive Item: [img] */
+    .grid-item-navbar-title-img{
+        grid-column: 1 / span 1;
+        grid-row: 1 / span 1;
+        justify-self: center;
+        align-self: center;
+        
+        width: 8vw;
+        height: auto;
+
+        /* Visual Debugging 
+        background-color: darkviolet;*/
+    }
+
+    /* Responsive Item: [Title] */
+    .grid-item-navbar-title-h1{
+        grid-column: 1 / span 1;
+        grid-row: 2 / span 1;
+
+        font-size: 2vw;
+        padding: 5px;
+
+        /* Visual Debugging
+        background-color: aqua;*/
+    }
+
+    .grid-container-navBar-links-Home{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+        grid-column: 1 / span 1;
+        grid-row: 1 /span 1;
+        place-self: center;
+    
+    }
+    
+    .grid-container-navBar-links-Blog{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+        grid-column: 2 / span 1;
+        grid-row: 1 /span 1;
+        place-self: center;
+    }
+    
+    .grid-container-navBar-links-Marketplace{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+        grid-column: 4 / span 1;
+        grid-row: 1 /span 1;
+        place-self: center;
+    }
+    
+    .grid-container-navBar-links-Contact{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+        grid-column: 5 / span 1;
+        grid-row: 1 /span 1;
+        place-self: center;
+    }
+
+    #navBar-link-Marketplace{
+        color:rgb(214, 61, 61);
+    }
+
+    .grid-container-content{
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        grid-row: 4 / span 1;
+    }
+
+    /* Grid Container: [article] =================================================*/
+    .grid-container-content-article{
+        grid-row: 1 / span 1;
+
+        /* Visual Debugging 
+        background-color: blue;*/
+    }
+
+    /* Grid Container: [aside] ================================================= */
+    .grid-container-content-aside{
+        grid-row: 2 / span 1;
+
+        /* Visual Debugging 
+        background-color: aquamarine;*/
+    }
+
+    /* Grid Container [Image+Description Cards] ============================== */
+    .grid-container-content-aside-image-description-cards{
+        display: grid;
+        grid-template-columns: 1fr 1.5fr;
+        grid-template-rows: 1fr;
+
+        place-items: center;
+        padding: 10px;
+        
+        /* Visual Debugging 
+        background-color: blueviolet;*/
+    }
+
+    /* Grid Item: [image] */
+    .grid-item-content-aside-image{
+        width: 15vw;
+        height: auto;
+        
+        /* Visual Debugging 
+        background-color:crimson;*/
+
+    }
+
+    /* Grid Item: [articleImages] */
+    .grid-item-content-articleImages{
+        width: 25vw;
+        height: auto;
+
+        /* Visual Debugging 
+        background-color: darkgoldenrod;*/
+    }
+
+    /* Grid Item: [description] */
+    .grid-item-content-aside-description{
+
+        grid-column: 2 / span 1;
+        justify-self: center;
+        align-self: start;
+        padding: 3px;
+        margin: 3px;
+        font-size: 2vw;
+
+        /* Visual Debugging 
+        background-color: darkolivegreen;*/
+    }
+
+}
+
+@media only screen and (max-width: 700px){
+    /* Visual Debugging 
+    body{
+        background-color: rgb(127, 146, 255);
+    } */
+
+    .figcaption{
+        text-align: center;
+        font-size: 4vw;
+        margin-bottom: 4vw;
+    }
+
+    /* ================================================= Base Container for everything =================================================*/
+    .Base-Container{
+        /*
+        Row 1 for NavBar Logo (grid-container-navBar) Container
+        Row 2 for Title (grid-container-title) Container
+        Row 3 for Image (grid-container-titleButtons) Container
+        Row 4 for Content (grid-container-content) Container
+        Row 5 for Foot (grid-container-footer) Container
+        */
+
+        display: grid;
+        overflow: auto;
+        grid-template-columns: 100%;
+        grid-template-rows: repeat(6, auto);
+        
+        /*Visual Debugging 
+        background-color: cornflowerblue;*/
+    }
+
+    /* Liquid Container: [NavBar] =================================================*/
+    .grid-container-navBar{
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr .5fr;
+        grid-row: 1 / span 1;
+
+        background-color: #d2d2d2;
+    }
+
+
+    /* Liquid Container title */
+    .grid-container-navbar-title{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+
+        margin: -20px;
+        
+        grid-column: 1 / span 1;
+        grid-row: 1 / span 1;
+
+        /* Visual Debugging 
+        background-color: forestgreen; */
+    }
+
+    /* Responsive Item: [img] */
+    .grid-item-navbar-title-img{
+        grid-column: 1 / span 1;
+        grid-row: 1 / span 1;
+        justify-self: center;
+        align-self: center;
+
+        margin: -10px;
+        
+        width: 12vw;
+        height: auto;
+
+        /* Visual Debugging 
+        background-color: darkviolet;*/
+    }
+
+    /* Responsive Item: [Title] */
+    .grid-item-navbar-title-h1{
+        grid-column: 1 / span 1;
+        grid-row: 2 / span 1;
+        place-self: center;
+        font-size: 2vw;
+        padding: 5px;
+
+        /* Visual Debugging
+        background-color: aqua;*/
+    }
+
+    .grid-container-navBar-links{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr;
+        grid-column: 1 / span 1;
+        grid-row: 2 / span 1;
+        place-items: center;
+    }
+
+    .grid-container-navBar-links-Home{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+        grid-column: 1 / span 1;
+        grid-row: 2 /span 1;
+        place-self: center;
+    
+    }
+    
+    .grid-container-navBar-links-Blog{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+        grid-column: 2 / span 1;
+        grid-row: 2 /span 1;
+        place-self: center;
+    }
+    
+    .grid-container-navBar-links-Marketplace{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+        grid-column: 3 / span 1;
+        grid-row: 2 /span 1;
+        place-self: center;
+    }
+    
+    .grid-container-navBar-links-Contact{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+        grid-column: 4 / span 1;
+        grid-row: 2 /span 1;
+        place-self: center;
+    }
+    
+    #grid-item-navBar-links-a{
+        font-size: 2vw;
+        padding: 20px;
+        justify-self: start;
+        align-self: center;
+    }
+
+    /* Liquid Container: [Title] =================================================*/
+    .grid-container-title{
+        grid-row: 2 / span 1;
+
+        /*Visual Debugging
+        background-color: brown;*/
+    }
+
+    /* Liquid Container: [titleButtons] =================================================*/
+    .grid-container-titleButtons{
+        grid-row: 3 / span 1;
+
+        /* Visual Debugging 
+        background-color: green; */
+    }
+
+    .grid-container-section-titleButtons{
+        grid-template-columns: repeat(2, auto);
+        grid-template-rows: repeat(2, auto);
+
+    
+        /* Visual Debugging 
+        background-color: darksalmon;*/
+    }
+
+    /* Responsive Item: [titleButtons] */
+    .grid-item-section-titleButtons{
+
+        width: 20vw;
+        height: auto;
+
+        /* Visual Debugging 
+        background-color: hotpink;*/
+    }
+
+    /* Liquid Container: [titleButtons] =================================================*/
+    .grid-container-content{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr .5fr;
+        grid-row: 4 / span 1;
+    
+        margin-top: 20px;
+        margin-bottom: 20px;
+    
+        background-color: #d2d2d2;
+    }
+
+    /* Liquid Container: [footer] ================================================= */
+    .grid-container-footer-div{
+        grid-row: 5 / span 1;
+
+        grid-template-columns: 2;
+        grid-template-rows: 1fr;
+
+        /* Visual Debugging 
+        background-color: darkorange;*/
+
+    }
+
+    .grid-item-navBar-links-a{
+        font-size: 2.5vw;
+    }
+
+    /* Responsive Item: [Title] */
+    .grid-item-title{
+        font-size: 2.5vw;
+        
+        /* Visual Debugging 
+        background-color: darkmagenta;*/
+    }
+
+    .grid-container-section-titleButtons{
+        column-gap: 9vw;
+    
+        /* Visual Debugging 
+        background-color: darksalmon;*/
+    }
+
+    /* Grid Container: [article] =================================================*/
+    .grid-container-content-article{
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(6, 1fr);
+
+        /* Visual Debugging 
+        background-color: blue;*/
+    }
+
+    /* Grid Item: [articleImages] */
+    .grid-item-content-articleImages{
+        width: 40vw;
+        height: auto;
+
+        /* Visual Debugging 
+        background-color: darkgoldenrod;*/
+    }
+
+    /* Grid Item: [description] */
+    .grid-item-content-aside-description{
+        font-size: 3vw;
+
+        /* Visual Debugging 
+        background-color: darkolivegreen;*/
+    }
+
+    .grid-item-content-aside-image{
+        width: 20vw;
+        height: auto;
+        
+        /* Visual Debugging 
+        background-color:crimson;*/
+    
+    }
+
+    /* Grid Item: [p] */
+    .grid-item-footer-div-information{
+        font-size: 3vw;
+
+        /* Visual Debugging
+        background-color: darkviolet;*/
+        
+    }
+
+}
