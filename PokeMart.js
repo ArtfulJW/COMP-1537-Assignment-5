@@ -35,7 +35,7 @@ app.get("/", function (req, res) {
     // }
 
     // Serve up this file
-    doc = fs.readFileSync("./html/directory.html", "utf-8");
+    doc = fs.readFileSync("./html/index.html", "utf-8");
     res.send(doc);
 
 });
