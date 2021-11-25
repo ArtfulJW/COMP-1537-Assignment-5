@@ -43,6 +43,46 @@ app.get("/", function (req, res) {
 
 });
 
+app.get("/directory", function(req, res){
+
+    // Check if session exists
+    if(req.session.loggedIn){
+        let directory = fs.readFileSync("html/directory.html", "utf-8");
+        let directoryDOM = new JSDOM(directory);
+
+        // Show User's firstName..
+        console.log("Sending Directory...");
+
+        res.send(directoryDOM.serialize());
+
+    } else {
+        res.redirect("/");
+    }
+
+});
+
+app.get("/marketplace", function (req, res){
+
+        // Check if session exists
+        if(req.session.loggedIn){
+            let marketplace = fs.readFileSync("html/marketplace.html", "utf-8");
+            let marketplaceDOM = new JSDOM(marketplace);
+    
+            // Show User's firstName..
+            let fullName = req.session.firstName + " " + req.session.lastName;
+            marketplaceDOM.window.document.getElementById("grid-item-user-FullName").innerHTML = fullName;
+            marketplaceDOM.window.document.getElementById("grid-item-user-email").innerHTML = req.session.email;
+            marketplaceDOM.window.document.getElementById("grid-item-user-password").innerHTML = req.session.password;
+            marketplaceDOM.window.document.getElementById("grid-item-user-city").innerHTML = req.session.city;
+            marketplaceDOM.window.document.getElementById("grid-item-user-trainerLevel").innerHTML = req.session.trainerLevel;
+
+            res.send(marketplaceDOM.serialize());
+    
+        } else {
+            res.redirect("/");
+        }
+})
+
 // IMPORTANT! 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -66,8 +106,12 @@ app.post("/login", function(req, res) {
             } else {
                 // authenticate the user, create a session
                 req.session.loggedIn = true;
+                req.session.firstName = userRecord.firstName;
+                req.session.lastName = userRecord.lastName;
                 req.session.email = userRecord.email;
-                req.session.name = userRecord.name;
+                req.session.password = userRecord.password;
+                req.session.city = userRecord.city;
+                req.session.trainerLevel = userRecord.trainerLevel;
                 req.session.save(function(err) {
                     // session saved, for analytics, we could record this in a DB
                 });
@@ -94,24 +138,6 @@ app.get("/logout", function(req,res){
             }
         });
     }
-});
-
-app.get("/directory", function(req, res){
-
-    // Check if session exists
-    if(req.session.loggedIn){
-        let directory = fs.readFileSync("html/directory.html", "utf-8");
-        let directoryDOM = new JSDOM(directory);
-
-        // Show User's firstName..
-        console.log("Sending Directory...");
-
-        res.send(directoryDOM.serialize());
-
-    } else {
-        res.redirect("/");
-    }
-
 });
 
 // Login Authenticate Function
