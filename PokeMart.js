@@ -65,8 +65,17 @@ app.get("/marketplace", function (req, res){
 
         // Check if session exists
         if(req.session.loggedIn){
+            
             let marketplace = fs.readFileSync("html/marketplace.html", "utf-8");
             let marketplaceDOM = new JSDOM(marketplace);
+
+            getPokeData(function(pokeRecord){
+                //console.log(pokeRecord[2]);
+                pokeRecord.forEach(element => {
+                    console.log(element.name);
+                //marketplaceDOM.window.document.getElementById("grid-item-pokeMartTable").appendChild()
+                });
+            });
     
             // Show User's firstName..
             let fullName = req.session.firstName + " " + req.session.lastName;
@@ -76,6 +85,8 @@ app.get("/marketplace", function (req, res){
             marketplaceDOM.window.document.getElementById("grid-item-user-city").innerHTML = req.session.city;
             marketplaceDOM.window.document.getElementById("grid-item-user-trainerLevel").innerHTML = req.session.trainerLevel;
 
+            // for(int x = 0; x < )
+            // Serialize to convert to DOM 
             res.send(marketplaceDOM.serialize());
     
         } else {
@@ -144,6 +155,7 @@ app.get("/logout", function(req,res){
 function authenticate(email, pwd, callback) {
 
     const mysql = require("mysql2");
+    // Connect to 'pokemart' Database
     const connection = mysql.createConnection({
       host: "localhost",
       user: "root",
@@ -173,6 +185,27 @@ function authenticate(email, pwd, callback) {
       }
     );
 
+}
+
+function getPokeData(callback){
+    // Goal of this function is to Connect and Retrieve Data from 'pokeData' Database, and
+    // return it to callback function.
+    const mysql = require("mysql2");
+    // Connect to 'pokedata' Database
+    const connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "pokedata"
+    });
+    connection.connect();
+    connection.query(
+        "SELECT * FROM pokemon", function(error, results, fields){
+            // results is an array of records, in JSON format
+            console.log("PokeData Results: " + results);
+            return callback(results);
+        }
+    );
 }
 
 async function init(){
