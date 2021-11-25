@@ -11,6 +11,8 @@ function ready(callback) {
 }
 
 ready(function(){
+
+    // Checks to see if Client Scriptis loaded.
     console.log("Client Script Loaded.")
 
     function ajaxGET(url, callback) {
@@ -68,7 +70,7 @@ ready(function(){
                 if(dataParsed.status == "fail") {
                     document.getElementById("errorMsg").innerHTML = dataParsed.msg;
                 } else {
-                    window.location.replace("/profile");
+                    window.location.replace("/directory");
                 }
             }
             //document.getElementById("errorMsg").innerHTML = dataParsed.msg;

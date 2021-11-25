@@ -23,22 +23,29 @@ app.use(session({
 // Retrieve URL at..
 app.get("/", function (req, res) {
 
-    // // Check if logged in.
-    // if(res.session.loggedIn){
-    //     // Logged in
-    //     // Serve up this file
-    //     doc = fs.readFileSync("./html/directory.html", "utf-8");
-    //     res.send(doc);
+    // Check if logged in.
+    if(req.session.loggedIn){
+        // Logged in
+        // Serve up this file
+        res.redirect("/directory");
 
-    // } else {
-    //     // Not logged in
-    // }
+    } else {
+        // Not logged in
+        let doc = fs.readFileSync("./html/index.html", "utf-8");
+        res.set("Server", "Poke Engine");
+        res.set("X-Powered-By", "PokeMart");
+        res.send(doc);
+    }
 
-    // Serve up this file
-    doc = fs.readFileSync("./html/index.html", "utf-8");
-    res.send(doc);
+    // // Serve up this file
+    // doc = fs.readFileSync("./html/index.html", "utf-8");
+    // res.send(doc);
 
 });
+
+// IMPORTANT! 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Server Detects ajaxPOST request, then handles it
 app.post("/login", function(req, res) {
@@ -69,6 +76,24 @@ app.post("/login", function(req, res) {
                 res.send({ status: "success", msg: "Logged in." });
             }
     });
+
+});
+
+app.get("/directory", function(req, res){
+
+    // Check if session exists
+    if(req.session.loggedIn){
+        let directory = fs.readFileSync("./html/directory.html", "utf-8");
+        let directoryDOM = new JSDOM(directory);
+
+        // Show User's firstName..
+        console.log("Sending Directory...");
+
+        res.send(directoryDOM.serialize());
+
+    } else {
+        res.redirect("/");
+    }
 
 });
 
