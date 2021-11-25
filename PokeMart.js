@@ -79,11 +79,28 @@ app.post("/login", function(req, res) {
 
 });
 
+app.get("/logout", function(req,res){
+
+    // Check to see if session exists
+    if (req.session) {
+        req.session.destroy(function(error) {
+            if (error) {
+                res.status(400).send("Unable to log out")
+            } else {
+                // session deleted, redirect to home
+                // res.redirect("/index.html");
+                let doc = fs.readFileSync("./html/index.html", "utf-8");
+                res.send(doc);
+            }
+        });
+    }
+});
+
 app.get("/directory", function(req, res){
 
     // Check if session exists
     if(req.session.loggedIn){
-        let directory = fs.readFileSync("./html/directory.html", "utf-8");
+        let directory = fs.readFileSync("html/directory.html", "utf-8");
         let directoryDOM = new JSDOM(directory);
 
         // Show User's firstName..
