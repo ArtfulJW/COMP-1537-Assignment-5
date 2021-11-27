@@ -114,16 +114,17 @@ function addRow(value){
     var table = marketplaceDOM.window.document.getElementById("grid-item-pokeMartTable");
 
     value.forEach(element => {
-        // let row = table.insertRow(table.length);
-        // let cell1 = row.insertCell(0);
-        // cell1.innerHTML = element.name;
-
-        let row = marketplaceDOM.window.document.createElement("tr");
-        let cell1 = marketplaceDOM.window.document.createElement("td");
+        let row = table.insertRow(-1);
+        let cell1 = row.insertCell(0);
         cell1.innerHTML = element.name;
-        row.appendChild(cell1);
-        table.appendChild(row);
-        console.log(row[1]);
+
+        // let row = marketplaceDOM.window.document.createElement("tr");
+        // let cell1 = marketplaceDOM.window.document.createElement("td");
+        // cell1.innerHTML = element.name;
+        // row.appendChild(cell1);
+        // table.appendChild(row);
+        
+        console.log(row[0]);
     });
 
 }
