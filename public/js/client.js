@@ -78,5 +78,4 @@ ready(function(){
         }, queryString);
     });
 
-
 })

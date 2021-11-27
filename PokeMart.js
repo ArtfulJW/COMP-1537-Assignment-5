@@ -12,6 +12,10 @@ app.use("/css", express.static("public/css"));
 app.use("/images", express.static("public/images"));
 app.use("/html", express.static("public/html"));
 
+// IMPORTANT! 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 // Create new Session, Gives you the "Keycard" that you need to access/open site.
 app.use(session({
     secret: "a secret",
@@ -51,7 +55,7 @@ app.get("/directory", function(req, res){
         let directoryDOM = new JSDOM(directory);
 
         // Show User's firstName..
-        console.log("Sending Directory...");
+        console.log("Displaying Directory...");
 
         res.send(directoryDOM.serialize());
 
@@ -61,6 +65,7 @@ app.get("/directory", function(req, res){
 
 });
 
+// Request to retrieve information..
 app.get("/marketplace", function (req, res){
 
         // Check if session exists
@@ -71,7 +76,10 @@ app.get("/marketplace", function (req, res){
 
             getPokeData(function(pokeRecord){
 
+                // Check
                 console.log(pokeRecord[0]);
+
+                addRow(pokeRecord);
 
                 pokeRecord.forEach(element => {
                     
@@ -83,10 +91,8 @@ app.get("/marketplace", function (req, res){
 
                     //addRow(element);
 
-                //marketplaceDOM.window.document.getElementById("grid-item-pokeMartTable").appendChild()
+                    //marketplaceDOM.window.document.getElementById("grid-item-pokeMartTable").appendChild()
                 });
-
-                addRow(pokeRecord);
 
             });
 
@@ -99,7 +105,6 @@ app.get("/marketplace", function (req, res){
             marketplaceDOM.window.document.getElementById("grid-item-user-city").innerHTML = req.session.city;
             marketplaceDOM.window.document.getElementById("grid-item-user-trainerLevel").innerHTML = req.session.trainerLevel;
 
-            // for(int x = 0; x < )
             // Serialize to convert to DOM 
             res.send(marketplaceDOM.serialize());
     
@@ -111,27 +116,41 @@ app.get("/marketplace", function (req, res){
 function addRow(value){
     let marketplace = fs.readFileSync("html/marketplace.html", "utf-8");
     let marketplaceDOM = new JSDOM(marketplace);
-    var table = marketplaceDOM.window.document.getElementById("grid-item-pokeMartTable");
+    var table = marketplaceDOM.window.document.getElementById("tableBody");
+
+    table.innerHTML = "";
+    var tr = "";
 
     value.forEach(element => {
-        let row = table.insertRow(-1);
-        let cell1 = row.insertCell(0);
-        cell1.innerHTML = element.name;
 
+        // Check for table, print out all the elements
+        console.log(element);
+
+        // Method 1
+        // let row = table.insertRow(-1);
+        // let cell1 = row.insertCell(0);
+        // cell1.innerHTML = element.name;
+
+        // Method 2
         // let row = marketplaceDOM.window.document.createElement("tr");
         // let cell1 = marketplaceDOM.window.document.createElement("td");
         // cell1.innerHTML = element.name;
         // row.appendChild(cell1);
         // table.appendChild(row);
+
+        // Method 3 - Creates a Row at each iteration for each element.
+        tr += '<tr>';
+        tr += '<td>' + element.name + '</td>' + '<td>' + element.height + '</td>' + '<td>' + element.category + '</td>' + '<td>' + element.weight + '</td>' + '<td>' + element.age + '</td>';
+        tr += '</tr>';
+
         
-        console.log(row[0]);
     });
 
+    // Add in all the elements at the end.
+    table.innerHTML += tr;
+    
+    console.log(table);
 }
-
-// IMPORTANT! 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 // Server Detects ajaxPOST request, then handles it
 app.post("/login", function(req, res) {
@@ -158,9 +177,7 @@ app.post("/login", function(req, res) {
                 req.session.password = userRecord.password;
                 req.session.city = userRecord.city;
                 req.session.trainerLevel = userRecord.trainerLevel;
-                req.session.save(function(err) {
-                    // session saved, for analytics, we could record this in a DB
-                });
+
                 // all we are doing as a server is telling the client that they
                 // are logged in, it is up to them to switch to the profile page
                 res.send({ status: "success", msg: "Logged in." });
@@ -237,7 +254,7 @@ function getPokeData(callback){
     connection.query(
         "SELECT * FROM pokemon", function(error, results, fields){
             // results is an array of records, in JSON format
-            console.log("PokeData Results: " + results);
+            // console.log("PokeData Results: " + results);
             return callback(results);
         }
     );
