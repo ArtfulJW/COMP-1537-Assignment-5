@@ -70,33 +70,24 @@ app.get("/marketplace", function (req, res){
             let marketplaceDOM = new JSDOM(marketplace);
 
             getPokeData(function(pokeRecord){
-                //console.log(pokeRecord[2]);
 
-                req.session.pokemonName
-                
+                console.log(pokeRecord[0]);
+
                 pokeRecord.forEach(element => {
+                    
+                    // console.log(element.name);
+                    // console.log(element.height);
+                    // console.log(element.category);
+                    // console.log(element.weight);
+                    // console.log(element.age);
 
-                    console.log(element.name);
-                    console.log(element.height);
-                    console.log(element.category);
-                    console.log(element.weight);
-                    console.log(element.age);
-
-                    // var row = table.insertRow(-1);
-                    // var cell1 = row.insertCell(0);
-                    // var cell2 = row.insertCell(1);
-                    // var cell3 = row.insertCell(2);
-                    // var cell4 = row.insertCell(3);
-                    // var cell5 = row.insertCell(4);
-
-                    // cell1.innerHTML = "Cell1";
-                    // cell2.innerHTML = "cell2";
-
-                    addRow(element);
-
+                    //addRow(element);
 
                 //marketplaceDOM.window.document.getElementById("grid-item-pokeMartTable").appendChild()
                 });
+
+                addRow(pokeRecord);
+
             });
 
     
@@ -122,31 +113,18 @@ function addRow(value){
     let marketplaceDOM = new JSDOM(marketplace);
     var table = marketplaceDOM.window.document.getElementById("grid-item-pokeMartTable");
 
-    console.log("AHHH");
+    value.forEach(element => {
+        // let row = table.insertRow(table.length);
+        // let cell1 = row.insertCell(0);
+        // cell1.innerHTML = element.name;
 
-    let row = table.insertRow(table.length);
-    for (let x = 0; x < table.length; x++){
-        let newCell = row.insertCell(x);
-        switch (x){
-            case 0:
-                newCell.innerHTML = value.name;
-                break;
-            case 1:
-                newCell.innerHTML = value.height;
-                break;
-            case 2: 
-                newCell.innerHTML = value.category;
-                break;
-            case 3:
-                newCell.innerHTML = value.weight;
-                break;
-            case 4:
-                newCell.innerHTML = value.age;
-                break;
-        }
-    }
-
-    // let newCell = row.insertCell(column);
+        let row = marketplaceDOM.window.document.createElement("tr");
+        let cell1 = marketplaceDOM.window.document.createElement("td");
+        cell1.innerHTML = element.name;
+        row.appendChild(cell1);
+        table.appendChild(row);
+        console.log(row[1]);
+    });
 
 }
 

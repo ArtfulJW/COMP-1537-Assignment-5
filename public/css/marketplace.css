@@ -1,3 +1,6 @@
 #Base-Container-User{
     margin: 5vw;
 }
+table {
+    border: 1px solid black;
+}
