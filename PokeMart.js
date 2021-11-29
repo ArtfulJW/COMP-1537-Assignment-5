@@ -123,6 +123,8 @@ app.get("/marketplace", function (req, res){
                 req.session.tablerows = tr
                 marketplaceDOM.window.document.getElementById("TableBody").innerHTML = req.session.tablerows;
                 console.log(table.innerHTML);
+                // Serialize to convert to DOM 
+                res.send(marketplaceDOM.serialize());   
             });
 
             console.log(table.innerHTML);
@@ -134,9 +136,6 @@ app.get("/marketplace", function (req, res){
             marketplaceDOM.window.document.getElementById("grid-item-user-password").innerHTML = req.session.password;
             marketplaceDOM.window.document.getElementById("grid-item-user-city").innerHTML = req.session.city;
             marketplaceDOM.window.document.getElementById("grid-item-user-trainerLevel").innerHTML = req.session.trainerLevel;
-
-            // Serialize to convert to DOM 
-            res.send(marketplaceDOM.serialize());
     
         } else {
             res.redirect("/");
