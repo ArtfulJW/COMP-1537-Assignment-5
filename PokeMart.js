@@ -74,6 +74,8 @@ app.get("/marketplace", function (req, res){
             let marketplace = fs.readFileSync("html/marketplace.html", "utf-8");
             let marketplaceDOM = new JSDOM(marketplace);
             var table = marketplaceDOM.window.document.getElementById("grid-item-pokeMartTable");
+
+            var tablerows;
             
             getPokeData(function(pokeRecord){
 
@@ -82,19 +84,26 @@ app.get("/marketplace", function (req, res){
 
                 //let tbody = marketplaceDOM.window.document.createElement('tbody');
 
-                addRow(pokeRecord);
+                //req.session.tablerows = addRow(pokeRecord);
 
-                //console.log(tbody);
+                // console.log(table.innerHTML);
                 //table.appendChild(tbody);
-
+                var tr = "";
                 pokeRecord.forEach(element => {
-                    // req.session.pokeName = element.name;
-                    // req.session.pokeHeight = element.height;
-                    // req.session.pokeCategory = element.category;
-                    // req.session.pokeWeight = element.weight;
-                    // req.session.pokeAge = element.age;
+                    req.session.pokeName = element.name;
+                    req.session.pokeHeight = element.height;
+                    req.session.pokeCategory = element.category;
+                    req.session.pokeWeight = element.weight;
+                    req.session.pokeAge = element.age;
 
-                    //addRow(req.session.pokeName,req.session.pokeHeight,req.session.pokeCategory,req.session.pokeWeight,req.session.pokeAge);
+                    tr += '<tr>';
+                    tr += '<td>' + req.session.pokeName 
+                        + '</td>' + '<td>' + req.session.pokeHeight 
+                        + '</td>' + '<td>' + req.session.pokeCategory 
+                        + '</td>' + '<td>' + req.session.pokeWeight 
+                        + '</td>' + '<td>' + req.session.pokeAge 
+                        + '</td>';
+                    tr += '</tr>';
 
                     // console.log(element.name);
                     // console.log(element.height);
@@ -111,8 +120,12 @@ app.get("/marketplace", function (req, res){
 
                 });
 
+                req.session.tablerows = tr
+                marketplaceDOM.window.document.getElementById("TableBody").innerHTML = req.session.tablerows;
+                console.log(table.innerHTML);
             });
 
+            console.log(table.innerHTML);
     
             // Show User's firstName..
             let fullName = req.session.firstName + " " + req.session.lastName;
@@ -134,7 +147,7 @@ function addRow(pokeRecord){
     let marketplace = fs.readFileSync("html/marketplace.html", "utf-8");
     let marketplaceDOM = new JSDOM(marketplace);
     var tablebody = marketplaceDOM.window.document.getElementById("TableBody");
-    var Table = marketplaceDOM.window.document.getElementById("grid-item-pokeMartTable");
+    var table = marketplaceDOM.window.document.getElementById("grid-item-pokeMartTable");
 
     //let tbody = marketplaceDOM.window.document.createElement('tbody');
     let row = marketplaceDOM.window.document.createElement('tr');
@@ -199,11 +212,10 @@ function addRow(pokeRecord){
     });
 
     // Add in all the elements at the end.
-    tablebody.innerHTML += tr;
-
-    // console.log(Table.innerHTML);
-    console.log(Table.innerHTML);
-
+    //tablebody.innerHTML += tr;
+    
+    console.log(table.innerHTML);
+    return tr;
     //console.log(table.innerHTML);
     //return tbody;
 }
