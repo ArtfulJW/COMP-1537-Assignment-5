@@ -73,25 +73,42 @@ app.get("/marketplace", function (req, res){
             
             let marketplace = fs.readFileSync("html/marketplace.html", "utf-8");
             let marketplaceDOM = new JSDOM(marketplace);
-
+            var table = marketplaceDOM.window.document.getElementById("grid-item-pokeMartTable");
+            
             getPokeData(function(pokeRecord){
 
                 // Check
-                console.log(pokeRecord[0]);
+                console.log(pokeRecord[3]);
+
+                //let tbody = marketplaceDOM.window.document.createElement('tbody');
 
                 addRow(pokeRecord);
 
+                //console.log(tbody);
+                //table.appendChild(tbody);
+
                 pokeRecord.forEach(element => {
-                    
+                    // req.session.pokeName = element.name;
+                    // req.session.pokeHeight = element.height;
+                    // req.session.pokeCategory = element.category;
+                    // req.session.pokeWeight = element.weight;
+                    // req.session.pokeAge = element.age;
+
+                    //addRow(req.session.pokeName,req.session.pokeHeight,req.session.pokeCategory,req.session.pokeWeight,req.session.pokeAge);
+
                     // console.log(element.name);
                     // console.log(element.height);
                     // console.log(element.category);
                     // console.log(element.weight);
                     // console.log(element.age);
 
+                    //console.log(req.session.pokeName);
+
                     //addRow(element);
 
                     //marketplaceDOM.window.document.getElementById("grid-item-pokeMartTable").appendChild()
+
+
                 });
 
             });
@@ -113,43 +130,82 @@ app.get("/marketplace", function (req, res){
         }
 })
 
-function addRow(value){
+function addRow(pokeRecord){
     let marketplace = fs.readFileSync("html/marketplace.html", "utf-8");
     let marketplaceDOM = new JSDOM(marketplace);
-    var table = marketplaceDOM.window.document.getElementById("tableBody");
+    var tablebody = marketplaceDOM.window.document.getElementById("TableBody");
+    var Table = marketplaceDOM.window.document.getElementById("grid-item-pokeMartTable");
 
-    table.innerHTML = "";
+    //let tbody = marketplaceDOM.window.document.createElement('tbody');
+    let row = marketplaceDOM.window.document.createElement('tr');
+
+    let cell1 = marketplaceDOM.window.document.createElement('td');
+    let cell2 = marketplaceDOM.window.document.createElement('td');
+    let cell3 = marketplaceDOM.window.document.createElement('td');
+    let cell4 = marketplaceDOM.window.document.createElement('td');
+    let cell5 = marketplaceDOM.window.document.createElement('td');
+
+    // table.innerHTML = "";
     var tr = "";
 
-    value.forEach(element => {
-
-        // Check for table, print out all the elements
-        console.log(element);
+    pokeRecord.forEach(element => {
 
         // Method 1
-        // let row = table.insertRow(-1);
-        // let cell1 = row.insertCell(0);
+        // row = tbody.insertRow(-1);
+
+        // cell1 = row.insertCell(0);
+        // cell2 = row.insertCell(1);
+        // cell3 = row.insertCell(2);
+        // cell4 = row.insertCell(3);
+        // cell5 = row.insertCell(4);
+
         // cell1.innerHTML = element.name;
+        // cell2.innerHTML = element.height;
+        // cell3.innerHTML = element.category;
+        // cell4.innerHTML = element.weight;
+        // cell5.innerHTML = element.age;
+
+        // row.appendChild(cell1);
+        // row.appendChild(cell2);
+        // row.appendChild(cell3);
+        // row.appendChild(cell4);
+        // row.appendChild(cell5);
+
+        // tablebody.appendChild(row);
+        // Table.appendChild(tablebody);
+
+        // Check for table, print out all the elements
+        // console.log(tablebody.innerHTML);
 
         // Method 2
         // let row = marketplaceDOM.window.document.createElement("tr");
         // let cell1 = marketplaceDOM.window.document.createElement("td");
         // cell1.innerHTML = element.name;
-        // row.appendChild(cell1);
+        // row.appendChild(cell1)
         // table.appendChild(row);
 
         // Method 3 - Creates a Row at each iteration for each element.
+        // tr += '<table>';
+        // tr += '<tr>';
+        // tr += '<td>' + element.name + '</td>' + '<td>' + element.height + '</td>' + '<td>' + element.category + '</td>' + '<td>' + element.weight + '</td>' + '<td>' + element.age + '</td>';
+        // tr += '</tr>';
+        // tr += '</table>';
+
+        // Method 4
         tr += '<tr>';
         tr += '<td>' + element.name + '</td>' + '<td>' + element.height + '</td>' + '<td>' + element.category + '</td>' + '<td>' + element.weight + '</td>' + '<td>' + element.age + '</td>';
         tr += '</tr>';
-
         
     });
 
     // Add in all the elements at the end.
-    table.innerHTML += tr;
-    
-    console.log(table);
+    tablebody.innerHTML += tr;
+
+    // console.log(Table.innerHTML);
+    console.log(Table.innerHTML);
+
+    //console.log(table.innerHTML);
+    //return tbody;
 }
 
 // Server Detects ajaxPOST request, then handles it
